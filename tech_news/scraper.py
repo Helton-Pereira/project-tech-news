@@ -1,5 +1,6 @@
 import requests
 from time import sleep
+from parsel import Selector
 
 
 # Requisito 1
@@ -17,7 +18,12 @@ def fetch(url):
 
 # Requisito 2
 def scrape_updates(html_content):
-    """Seu código deve vir aqui"""
+    selector = Selector(html_content)
+    news_links = selector.css("h2 a::attr(href)").getall()
+    if news_links is False:
+        no_links = []
+        return no_links
+    return news_links
 
 
 # Requisito 3
